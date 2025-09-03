@@ -36,7 +36,7 @@ target-version = "py311"
 [tool.ruff.lint]
 # See Ruff docs for a full list of rule codes to enable.
 # Example: Pyflakes, pycodestyle, isort, pep8-naming, etc.
-select =
+select = ["E4", "E7", "E9", "F", "B"]
 # Ignore line length violations, as Black handles them.
 ignore = ["E501"]
 
