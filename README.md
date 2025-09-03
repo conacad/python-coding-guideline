@@ -11,7 +11,7 @@ This document outlines the official Python coding standards for Phincon's AI pla
 -   **Automation:** We automate formatting and linting to eliminate style debates and focus code reviews on logic and architecture.
     
 
-## 2. The Automated Toolchain (Non-Negotiable)
+## 2. The Automated Toolchain
 
 Our code quality is enforced by a mandatory toolchain. All code must pass checks from these tools before being merged.
 
@@ -111,6 +111,7 @@ def calculate_risk_score(user_profile: dict, transaction_history: list[dict]) ->
     #... implementation...
     return 0.75
 ~~~
+
 ## 6. Modern Python Best Practices
 
 -   **Type Hinting**:
@@ -132,43 +133,3 @@ def calculate_risk_score(user_profile: dict, transaction_history: list[dict]) ->
     -   **Empty Collections**: Use `if user_list:` not `if len(user_list) > 0:`.
         
 -   **Context Managers**: Use the `with` statement for managing resources like files or database connections to ensure they are properly closed.
-    
-
-## 7. FastAPI Application Standards
-
--   **Project Structure**: Follow a standard, feature-based project structure for scalability.
-~~~
-app/
-├── api/          # Routers and endpoints
-├── core/         # App-wide configuration
-├── db/           # Database session management
-├── models/       # SQLAlchemy ORM models
-├── schemas/      # Pydantic schemas (API contracts)
-├── services/     # Business logic
-└── main.py       # FastAPI app instantiation
-~~~
--   **API Endpoints**:
-    
-    -   Group related endpoints in `fastapi.APIRouter` instances.
-        
-    -   Explicitly define `response_model`, `status_code`, `summary`, and `description` for clear, auto-generated documentation.
-        
--   **Data Modeling**:
-    
-    -   Maintain a strict separation between SQLAlchemy `models` (persistence) and Pydantic `schemas` (API contract).
-        
-    -   Create specific schemas for different operations (e.g., `UserCreate`, `UserRead`).
-        
--   **Dependency Injection**:
-    
-    -   Use `fastapi.Depends` extensively to inject dependencies like database sessions and services.
-        
-    -   For dependencies that manage resources (like a DB session), **must** use a function with `yield` to ensure proper setup and teardown.
-        
--   **Async Operations**:
-    
-    -   Use `async def` for path operations that perform I/O (database, network calls).
-        
-    -   Use standard `def` for CPU-bound work. FastAPI will run it in a thread pool.
-        
-    -   **Never** call a blocking I/O function (e.g., `requests.get()`) inside an `async def` function.
